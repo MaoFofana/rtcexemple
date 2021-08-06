@@ -90,16 +90,25 @@
 <script src="/node_modules/webrtc-adapter/out/adapter.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
+
 // ......................................................
 // .......................UI Code........................
 // ......................................................
 document.getElementById('open-room').onclick = function() {
-  disableInputButtons();
+  navigator.mediaDevices.getUserMedia({ audio: true })
+          .then(function(stream) {
+            console.log('You let me use your mic!')
+          })
+          .catch(function(err) {
+            console.log('No mic for you!')
+          });
   connection.openOrJoin("mao", function(isRoomExist, roomid) {
     if (!isRoomExist) {
       showRoomURL(roomid);
     }
   });
+  disableInputButtons();
+
 };
 document.getElementById("cancel").onclick = function (){
   //connection.closeSocket();
