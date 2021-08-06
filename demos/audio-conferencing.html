@@ -95,13 +95,13 @@
 // .......................UI Code........................
 // ......................................................
 document.getElementById('open-room').onclick = function() {
-  navigator.mediaDevices.getUserMedia({ audio: true })
-          .then(function(stream) {
-            console.log('You let me use your mic!')
-          })
-          .catch(function(err) {
-            console.log('No mic for you!')
-          });
+  navigator.mediaDevices.getUserMedia({video: false, audio: true}).then( stream => {
+    window.localStream = stream;
+    window.localAudio.srcObject = stream;
+    window.localAudio.autoplay = true;
+  }).catch( err => {
+    console.log("u got an error:" + err)
+  });
   connection.openOrJoin("mao", function(isRoomExist, roomid) {
     if (!isRoomExist) {
       showRoomURL(roomid);
